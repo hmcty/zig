@@ -29,7 +29,7 @@ pub fn convertHex(comptime T: type, n_: Number(T)) T {
     const exp_bits = math.floatExponentBits(T);
     const exp_bias = min_exp - 1;
 
-    // mantissa now implicitly divided by 2^mantissa_bits
+    // mantissa now implicitly divided by 2^fractional_bits
     n.exponent += fractional_bits;
 
     // Shift mantissa and exponent to bring representation into float range.

@@ -149,9 +149,9 @@ test "#11169" {
 }
 
 test "many_digits hex" {
-    // const a: f32 = try std.fmt.parseFloat(f32, "0xffffffffffffffff.0p0"); // This fails btw.
-    // const b: f32 = @floatCast(try std.fmt.parseFloat(f128, "0xffffffffffffffff.0p0"));
-    // try std.testing.expectEqual(a, b);
+    const a: f32 = try parseFloat(f32, "0xffffffffffffffff.0p0");
+    const b: f32 = @floatCast(try parseFloat(f128, "0xffffffffffffffff.0p0"));
+    try std.testing.expectEqual(a, b);
 }
 
 test "hex.special" {
@@ -160,6 +160,7 @@ test "hex.special" {
     try testing.expect(math.isPositiveInf(try parseFloat(f32, "+Inf")));
     try testing.expect(math.isNegativeInf(try parseFloat(f32, "-iNf")));
 }
+
 test "hex.zero" {
     try testing.expectEqual(@as(f32, 0.0), try parseFloat(f32, "0x0"));
     try testing.expectEqual(@as(f32, 0.0), try parseFloat(f32, "-0x0"));

@@ -113,7 +113,7 @@ pub fn from(comptime T: type) Self {
             .max_exponent_fast_path_disguised = 46,
             .max_mantissa_fast_path = 2 << std.math.floatMantissaBits(T),
             // Slow + Eisel-Lemire
-            .mantissa_explicit_bits = std.math.floatMantissaBits(T) - 1,
+            .mantissa_explicit_bits = std.math.floatFractionalBits(T),
             .infinite_power = 0x7fff,
             // Eisel-Lemire.
             // NOTE: Not yet tested (no f80 eisel-lemire implementation)
