@@ -140,7 +140,7 @@ test "largest normals" {
     try expectEqual(@as(u16, @bitCast(try parseFloat(f16, "65504"))), 0x7bff);
     try expectEqual(@as(u32, @bitCast(try parseFloat(f32, "3.4028234664E38"))), 0x7f7f_ffff);
     try expectEqual(@as(u64, @bitCast(try parseFloat(f64, "1.7976931348623157E308"))), 0x7fef_ffff_ffff_ffff);
-    try expectEqual(@as(u80, @bitCast(try parseFloat(f80, "1.189731495357231765e4932"))), 0x7ffe_ffff_ffff_ffff_ffff);
+    try expectEqual(@as(u80, @bitCast(try parseFloat(f80, "1.189731495357231765E4932"))), 0x7ffe_ffff_ffff_ffff_ffff);
     try expectEqual(@as(u128, @bitCast(try parseFloat(f128, "1.1897314953572317650857593266280070162E4932"))), 0x7ffe_ffff_ffff_ffff_ffff_ffff_ffff_ffff);
 }
 
@@ -218,21 +218,23 @@ test "hex.f64" {
     try testing.expectEqual(try parseFloat(f64, "0x1p-1074"), math.floatTrueMin(f64));
     try testing.expectEqual(try parseFloat(f64, "-0x1p-1074"), -math.floatTrueMin(f64));
 }
+
 test "hex.f80" {
-    try testing.expectEqual(try parseFloat(f80, "0xap0"), 10.0);
+    try testing.expectEqual(try parseFloat(f80, "0x1p0"), 1.0);
     try testing.expectEqual(try parseFloat(f80, "-0x1p-1"), -0.5);
     try testing.expectEqual(try parseFloat(f80, "0x10p+10"), 16384.0);
     try testing.expectEqual(try parseFloat(f80, "0x10p-10"), 0.015625);
     // Max normalized value.
-    // try testing.expectEqual(try parseFloat(f80, "0xf.ffffffffffffffff8p+16380"), math.floatMax(f80));
-    // try testing.expectEqual(try parseFloat(f80, "-0xf.ffffffffffffffff8p+16380"), -math.floatMax(f80));
+    try testing.expectEqual(try parseFloat(f80, "0xf.fffffffffffffff7p+16380"), math.floatMax(f80));
+    try testing.expectEqual(try parseFloat(f80, "-0xf.fffffffffffffff7p+16380"), -math.floatMax(f80));
     // Min normalized value.
     try testing.expectEqual(try parseFloat(f80, "0x1p-16382"), math.floatMin(f80));
     try testing.expectEqual(try parseFloat(f80, "-0x1p-16382"), -math.floatMin(f80));
     // Min denormalized value.
-    try testing.expectEqual(try parseFloat(f80, "0x1p-16494"), math.floatTrueMin(f80));
-    try testing.expectEqual(try parseFloat(f80, "-0x1p-16494"), -math.floatTrueMin(f80));
+    try testing.expectEqual(try parseFloat(f80, "0x1p-16445"), math.floatTrueMin(f80));
+    try testing.expectEqual(try parseFloat(f80, "-0x1p-16445"), -math.floatTrueMin(f80));
 }
+
 test "hex.f128" {
     try testing.expectEqual(try parseFloat(f128, "0x1p0"), 1.0);
     try testing.expectEqual(try parseFloat(f128, "-0x1p-1"), -0.5);
@@ -244,7 +246,7 @@ test "hex.f128" {
     // Min normalized value.
     try testing.expectEqual(try parseFloat(f128, "0x1p-16382"), math.floatMin(f128));
     try testing.expectEqual(try parseFloat(f128, "-0x1p-16382"), -math.floatMin(f128));
-    // // Min denormalized value.
+    // Min denormalized value.
     try testing.expectEqual(try parseFloat(f128, "0x1p-16494"), math.floatTrueMin(f128));
     try testing.expectEqual(try parseFloat(f128, "-0x1p-16494"), -math.floatTrueMin(f128));
     // ensure round-to-even
